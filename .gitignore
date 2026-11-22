@@ -1,0 +1,15 @@
+# Only the DE10-Nano project folders are tracked; everything else in projeto/
+# (DE10-Standard project, Terasic System CDs, manuals, keys) stays out.
+/*
+!/.gitignore
+!/README.md
+!/fpga_nano_crypto/
+!/fpga_nano_crypto_step1/
+
+# Everywhere
+.DS_Store
+__pycache__/
+.venv/
+
+# Frames saved by receiver.py (camera captures)
+fpga_nano_crypto/host/*.png

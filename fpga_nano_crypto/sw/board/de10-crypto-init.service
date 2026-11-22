@@ -1,0 +1,12 @@
+[Unit]
+Description=DE10-Nano crypto: static IP and FPGA-to-SDRAM ports
+Wants=sys-subsystem-net-devices-eth0.device
+After=sys-subsystem-net-devices-eth0.device
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/de10-crypto-init.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

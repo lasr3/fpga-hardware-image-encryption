@@ -1,0 +1,10 @@
+db/
+incremental_db/
+qdb/
+output_files/
+*.qws
+*.bak
+sim/*.log
+soc_system/
+.qsys_edit/
+sw/crypto_key
