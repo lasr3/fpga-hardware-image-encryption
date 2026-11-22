@@ -1,15 +1,25 @@
-# Only the DE10-Nano project folders are tracked; everything else in projeto/
-# (DE10-Standard project, Terasic System CDs, manuals, keys) stays out.
-/*
-!/.gitignore
-!/README.md
-!/fpga_nano_crypto/
-!/fpga_nano_crypto_step1/
-
-# Everywhere
 .DS_Store
 __pycache__/
 .venv/
 
-# Frames saved by receiver.py (camera captures)
-fpga_nano_crypto/host/*.png
+# Quartus / Platform Designer outputs
+fpga/db/
+fpga/incremental_db/
+fpga/qdb/
+fpga/output_files/
+fpga/soc_system/
+fpga/.qsys_edit/
+*.qws
+*.bak
+
+# Simulation outputs
+fpga/sim/*.log
+fpga/sim/*.vvp
+fpga/sim/*.vcd
+
+# Programs built on the board
+software/board/crypto_key
+software/board/frame_server
+
+# Frames saved by receiver.py
+software/host/*.png
