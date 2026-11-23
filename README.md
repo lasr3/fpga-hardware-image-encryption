@@ -47,6 +47,35 @@ Details: [architecture](docs/architecture.md) · [encryption](docs/encryption.md
 [setup and running the demo](docs/hardware-setup.md) ·
 [problems found and how they were solved](docs/debugging.md)
 
+## Why the ECB image matters
+
+The third panel of the demo image shows the same frame encrypted in **ECB mode**
+(Electronic Codebook) instead of CTR. It uses the same AES-128 and the same key,
+and the scene is still recognisable:
+
+| Camera image | ECB mode | CTR mode (used) |
+|---|---|---|
+| ![plain](docs/images/plain.png) | ![ECB](docs/images/ecb.png) | ![CTR](docs/images/cipher.png) |
+
+- **ECB encrypts each block on its own:** `cipher = AES(key, pixel colour)`. The
+  same colour always gives the same ciphertext, so every area of one colour turns
+  into an area of one (random) colour. Edges, text and shapes survive: "SESAME
+  STREET", "android" and both figures can still be read.
+- **CTR encrypts a counter, not the pixel:** `cipher = pixel XOR AES(key, nonce ‖ frame ‖ pixel index)`.
+  The counter is different for every pixel of every frame, so two identical pixels
+  never give the same ciphertext and the result is uniform noise.
+- **The cipher is the same; the mode makes the difference.** AES itself is secure
+  in both panels; ECB leaks the *structure* of the data. This is the classic
+  "ECB penguin" effect, reproduced here on live video.
+
+On the board, SW1 switches the HDMI output to this ECB view. The FPGA reduces
+each colour to 3 bits per channel before encrypting, so similar colours map to the
+same ciphertext and the effect is easy to see. Only 24 of the 128 output bits are
+shown, so this view is for comparison only and cannot be decrypted. The ECB image
+in the repository is computed on the computer by `capture_demo.py` with the same
+function as the FPGA (`fpga/rtl/video_crypt.v`, `ecb_block`). See
+[encryption](docs/encryption.md) for details.
+
 ## Results
 
 | | |
